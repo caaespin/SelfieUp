@@ -1,13 +1,18 @@
 package com.charly.selfieup;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 public class AlarmClock extends AppCompatActivity {
+
+    AnimationDrawable clock_animation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,18 @@ public class AlarmClock extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        ImageView clockImage = (ImageView) findViewById(R.id.clock_fig);
+        clockImage.setImageResource(R.drawable.animation_list);
+        clock_animation = (AnimationDrawable) clockImage.getDrawable();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+       // ImageView clockImage = (ImageView) findViewById(R.id.clock_fig);
+        //clockImage.setBackgroundResource(R.drawable.animation_list);
+        //clock_animation = (AnimationDrawable) clockImage.getBackground();
+        clock_animation.start();
+
+    }
 }

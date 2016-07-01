@@ -1,5 +1,6 @@
 package com.charly.selfieup;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,11 +23,15 @@ public class AlarmClock extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        //.setAction("Action", null).show();
+                //Go to the set_alarm activity
+                Intent setAlarm = new Intent(getApplicationContext(), set_alarm.class);
+                startActivity(setAlarm);
             }
         });
         ImageView clockImage = (ImageView) findViewById(R.id.clock_fig);

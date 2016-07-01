@@ -46,7 +46,8 @@
                     android:orientation="horizontal"
                     android:id="@+id/relativeLayout9"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView">
+                    android:layout_below="@+id/textView"
+                    android:background="@android:color/transparent">
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabB"
@@ -71,6 +72,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+
                     android:id="@+id/relativeLayout10"
                     android:layout_below="@+id/relativeLayout9"
                     android:layout_alignParentStart="true">
@@ -80,9 +82,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:showDuration="600"
-                        app:hideDuration="200"
+                        app:hideDuration="400"
                         app:horizontalMargin="16dp"
                         app:verticalMargin="16dp"
+                        app:fadeInPivotX="0dp"
+                        app:fadeInPivotY="30dp"
                         app:fadeInFraction="0.2"
                         app:fabId="@+id/fabtoolbar_fab"
                         app:containerId="@+id/fabtoolbar_container"
@@ -93,7 +97,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:layout_alignParentStart="true">
+                            android:layout_alignParentStart="true"
+                            >
 
                             <android.support.design.widget.FloatingActionButton
                                 android:id="@+id/fabtoolbar_fab"
@@ -109,7 +114,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Choose days of the week, or leave blank for one\ntime use"
+                                android:text="Choose days of the week, or leave blank for one time use"
                                 android:id="@+id/choose_days"
                                 android:layout_marginStart="45dp"
                                 android:layout_centerVertical="true"
@@ -117,31 +122,109 @@
 
                         </RelativeLayout>
 
+
+
                         <LinearLayout
                             android:id="@+id/fabtoolbar_toolbar"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="75dp"
                             android:layout_alignParentTop="true"
                             android:orientation="horizontal">
 
+                            <HorizontalScrollView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content" >
+
+                            <LinearLayout
+                            android:id="@+id/x"
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:layout_alignParentTop="true"
+                            android:orientation="horizontal"
+                            android:background="@android:color/transparent">
+
+                            <ImageView
+                                android:id="@+id/close"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:elevation="10dp"
+                                />
+
                             <ImageView
                                 android:id="@+id/monday"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
                                 android:elevation="10dp"
                                 android:background="@drawable/days_format"
                                 />
                             <ImageView
-                                android:id="@+id/tuesday"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                            android:id="@+id/tuesday"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:elevation="10dp"
+                            android:background="@drawable/days_format"
+                            />
+                            <ImageView
+                                android:id="@+id/wednesday"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
+                                android:layout_weight="1"
                                 android:elevation="10dp"
                                 android:background="@drawable/days_format"
                                 />
+                            <ImageView
+                                android:id="@+id/thursday"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                android:background="@drawable/days_format"
+                                />
+                            <ImageView
+                                android:id="@+id/friday"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                android:background="@drawable/days_format"
+                                />
+                            <ImageView
+                                android:id="@+id/saturday"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                android:background="@drawable/days_format"
+                                />
+                            <ImageView
+                                android:id="@+id/sunday"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:elevation="10dp"
+                                android:background="@drawable/days_format"
+                                />
+                            </LinearLayout>
+
+                            </HorizontalScrollView>
+
                         </LinearLayout>
 
                     </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>

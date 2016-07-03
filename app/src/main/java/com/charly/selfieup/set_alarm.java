@@ -18,5 +18,4 @@ public class set_alarm extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 }

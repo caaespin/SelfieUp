@@ -31,7 +31,7 @@ import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 public class set_alarmFragment extends Fragment {
 
     //Array of days selected
-    boolean[] selected = {false, false, false, false, false, false, false};
+    Boolean[] selected = {false, false, false, false, false, false, false};
     //Array of the initials for the days
     String[] dayInitial = {"M", "T", "W", "Th", "F", "S", "Su"};
     View rootView;

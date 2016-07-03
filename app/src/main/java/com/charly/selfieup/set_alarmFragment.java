@@ -4,6 +4,7 @@ package com.charly.selfieup;
 //https://github.com/fafaldo/FABToolbar  //used it for the toolbar expansion thing
 //https://github.com/amulyakhare/TextDrawable //used this for letter for the days
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
@@ -79,7 +81,11 @@ public class set_alarmFragment extends Fragment {
             if(uri!=null){
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if(Settings.System.canWrite(getContext())) RingtoneManager.setActualDefaultRingtoneUri(getActivity(), RingtoneManager.TYPE_ALARM, uri);
+                    if(Settings.System.canWrite(getContext())) {
+                        RingtoneManager.setActualDefaultRingtoneUri(getActivity(), RingtoneManager.TYPE_ALARM, uri);
+                        TextView ringtoneName = (TextView) rootView.findViewById(R.id.choose_ringtone);
+                        ringtoneName.setText((CharSequence) RingtoneManager.getRingtone(getContext(), uri).getTitle(getContext()));
+                    }
                     else {
                         Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
                         intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
@@ -143,7 +149,7 @@ public class set_alarmFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Show the final layout
-                layout.show();
+                //layout.show();
                 soundActivity = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                 soundActivity.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
                 soundActivity.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");

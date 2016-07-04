@@ -19,10 +19,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.charly.selfieup.alarmdatabase.DBManager;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
 /**
@@ -43,7 +45,8 @@ public class set_alarmFragment extends Fragment {
     TextDrawable[] dayDrawable = new TextDrawable[7];
     int[] imageId = {R.id.monday, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday, R.id.sunday};
     //FAB button and the FAB toolbar
-    FABToolbarLayout layout;
+    //FABToolbarLayout layout;
+    Button choose, save;
     FloatingActionButton fabA;
     //Counter loop variables
     int i;
@@ -61,13 +64,15 @@ public class set_alarmFragment extends Fragment {
         //Defines the rootView
         rootView = inflater.inflate(R.layout.fragment_set_alarm, container, false);
         //Images to be used for the days and close button, as well as the close button and the FAB
-        close = (ImageView) rootView.findViewById(R.id.close);
+        //close = (ImageView) rootView.findViewById(R.id.close);
         setBarImages();
         //Initialize the drawables
         setInitialDrawables();
         //Set the listeners for the days and the button for opening the app toolbar,
         //as well as the close button.
         setDayListeners();
+
+        DBManager.initialize(getContext());
         return rootView;
 
     }
@@ -83,8 +88,9 @@ public class set_alarmFragment extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if(Settings.System.canWrite(getContext())) {
                         RingtoneManager.setActualDefaultRingtoneUri(getActivity(), RingtoneManager.TYPE_ALARM, uri);
-                        TextView ringtoneName = (TextView) rootView.findViewById(R.id.choose_ringtone);
-                        ringtoneName.setText((CharSequence) RingtoneManager.getRingtone(getContext(), uri).getTitle(getContext()));
+                        //TextView ringtoneName = (TextView) rootView.findViewById(R.id.choose_ringtone);
+                        choose.setText((CharSequence) RingtoneManager.getRingtone(getContext(), uri).getTitle(getContext()));
+
                     }
                     else {
                         Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
@@ -102,8 +108,10 @@ public class set_alarmFragment extends Fragment {
         for(i = 0; i<imageId.length; i++){
             dayImage[i] = (ImageView) rootView.findViewById(imageId[i]);
         }
-        fabA = (FloatingActionButton) rootView.findViewById(R.id.fabtoolbar_fab);
-        layout = (FABToolbarLayout) rootView.findViewById(R.id.fabtoolbar);
+        //fabA = (FloatingActionButton) rootView.findViewById(R.id.fabtoolbar_fab);
+        //layout = (FABToolbarLayout) rootView.findViewById(R.id.fabtoolbar);
+        choose = (Button) rootView.findViewById(R.id.choose);
+        save = (Button) rootView.findViewById(R.id.save);
     }
 
     //Private method for initializing in the beggining the day drawables and the closing mark
@@ -115,9 +123,14 @@ public class set_alarmFragment extends Fragment {
             dayImage[i].setImageDrawable(dayDrawable[i]);
         }
         //Set the drawables for the closing icon.
+
+
+        /**
         close_drawable = TextDrawable.builder().beginConfig().bold().withBorder(7).endConfig()
                 .buildRound("X", Color.parseColor("#ffb433"));
         close.setImageDrawable(close_drawable);
+
+        **/
     }
 
 
@@ -145,6 +158,17 @@ public class set_alarmFragment extends Fragment {
             });
         }
 
+        choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundActivity = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                soundActivity.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
+                soundActivity.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+                startActivityForResult(soundActivity, 4);
+            }
+        });
+
+        /**
         fabA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,14 +181,25 @@ public class set_alarmFragment extends Fragment {
             }
         });
 
+        **/
+
+        /**
         close.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 layout.hide();
             }
         });
+        **/
+        save.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
     }
+
+
 
 }

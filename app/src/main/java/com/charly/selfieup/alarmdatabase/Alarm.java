@@ -26,6 +26,31 @@ public class Alarm {
         this.ID = ID;
     }
 
+    public String getDays() {
+        return days;
+    }
+
+    public void setDays(Boolean[] days) {
+        for(int i=0; i<days.length; i++){
+            if(days[i]){
+                this.days += Integer.toString(i);
+            }
+        }
+    }
+
+    public void setDays(String days) {
+        this.days = days;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    /**
     public Boolean[] getDays() {
         Boolean[] daysArr = new Boolean[7];
         for(int i=0; i<daysArr.length; i++){
@@ -40,20 +65,7 @@ public class Alarm {
         return daysArr;
     }
 
-    public void setDays(Boolean[] days) {
-        for(int i=0; i<days.length; i++){
-            if(days[i]){
-                this.days += Integer.toString(i);
-            }
-        }
-    }
+    **/
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+
 
 
     tools:context="com.charly.selfieup.set_alarmFragment"
@@ -151,92 +151,61 @@
                     android:id="@+id/test"
                     android:layout_below="@+id/relativeLayout10">
 
-                    <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
-                        android:id="@+id/fabtoolbar"
+                    <LinearLayout
+                        android:id="@+id/linearlayout_song"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:showDuration="600"
-                        app:hideDuration="400"
-                        app:horizontalMargin="16dp"
-                        app:verticalMargin="16dp"
-                        app:fadeInPivotX="0dp"
-                        app:fadeInPivotY="30dp"
-                        app:fadeInFraction="0.2"
-                        app:fabId="@+id/fabtoolbar_fab"
-                        app:containerId="@+id/fabtoolbar_container"
-                        app:fabToolbarId="@+id/fabtoolbar_toolbar">
+                        android:layout_height="75dp"
+                        android:layout_alignParentTop="true"
+                        android:orientation="horizontal"
+                        android:background="#ffc466"
+                        android:gravity="center"
+                        android:elevation="20dp">
 
-                        <RelativeLayout
-                            android:id="@+id/fabtoolbar_container"
+                        <Button
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Choose a Ringtone"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:elevation="15dp"
+                            android:id="@+id/choose"
+                            android:elegantTextHeight="true"
+                            style="?android:attr/borderlessButtonStyle"/>
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/relativeLayoutConfirm"
+                    android:layout_below="@+id/test">
+
+                    <LinearLayout
+                        android:id="@+id/linearlayout_confirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_alignParentTop="true"
+                        android:orientation="horizontal"
+                        android:background="#ffeb66"
+                        android:gravity="center">
+
+                        <Button
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentStart="true"
-                            >
-
-                            <android.support.design.widget.FloatingActionButton
-                                android:id="@+id/fabtoolbar_fab"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                app:fabSize="normal"
-                                app:backgroundTint="#ff3333"
-                                android:src="@android:drawable/ic_menu_my_calendar"
-                                android:layout_alignParentStart="true" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Choose a Ringtone"
-                                android:id="@+id/choose_ringtone"
-                                android:layout_marginStart="60dp"
-                                android:layout_centerVertical="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_toEndOf="@+id/fabtoolbar_fab" />
-
-                        </RelativeLayout>
+                            android:id="@+id/save"
+                            android:text="SAVE"
+                            android:elevation="15dp"
+                            android:theme="@style/MyButton"/>
 
 
-
-                        <LinearLayout
-                            android:id="@+id/fabtoolbar_toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="75dp"
-                            android:layout_alignParentTop="true"
-                            android:orientation="horizontal">
-
-                            <HorizontalScrollView
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content" >
-
-                                <LinearLayout
-                                    android:id="@+id/x"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="75dp"
-                                    android:layout_alignParentTop="true"
-                                    android:orientation="horizontal"
-                                    android:background="@android:color/transparent">
-
-                                    <ImageView
-                                        android:id="@+id/close"
-                                        android:layout_width="45dp"
-                                        android:layout_height="45dp"
-                                        android:layout_gravity="center"
-                                        android:layout_margin="5dp"
-                                        android:elevation="10dp"
-                                        />
-
-                                </LinearLayout>
-
-                            </HorizontalScrollView>
-
-                        </LinearLayout>
-
-                    </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
+                    </LinearLayout>
 
 
                 </RelativeLayout>
+
 
 
             </RelativeLayout>

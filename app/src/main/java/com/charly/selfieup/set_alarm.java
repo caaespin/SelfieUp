@@ -21,6 +21,6 @@ public class set_alarm extends AppCompatActivity {
         //toolbar.setTitle("Set Your Alarm");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //toolbar.setTitle("Set Your Alarm");
-        //DBManager.initialize(getApplicationContext());
+        DBManager.initialize(getApplicationContext());
     }
 }

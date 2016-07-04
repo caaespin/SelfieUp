@@ -4,12 +4,14 @@ package com.charly.selfieup;
 //https://github.com/fafaldo/FABToolbar  //used it for the toolbar expansion thing
 //https://github.com/amulyakhare/TextDrawable //used this for letter for the days
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.media.audiofx.BassBoost;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -22,18 +24,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.charly.selfieup.alarmdatabase.DBManager;
+import com.charly.selfieup.alarmdatabase.Alarm;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
+
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class set_alarmFragment extends Fragment {
 
-    //Array of days selected
+    //Array of days selected, and a flag bool
     Boolean[] selected = {false, false, false, false, false, false, false};
+    Boolean flag = true;
     //Array of the initials for the days
     String[] dayInitial = {"M", "T", "W", "Th", "F", "S", "Su"};
     View rootView;
@@ -44,14 +52,19 @@ public class set_alarmFragment extends Fragment {
     ImageView[] dayImage = new ImageView[7];
     TextDrawable[] dayDrawable = new TextDrawable[7];
     int[] imageId = {R.id.monday, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday, R.id.sunday};
-    //FAB button and the FAB toolbar
-    //FABToolbarLayout layout;
+    //Buttons and time picker
     Button choose, save;
-    FloatingActionButton fabA;
+    TimePicker timepick;
     //Counter loop variables
     int i;
+    //Ints for the hour and minute to be set
+    Integer mHour, mMinute;
     //Intent variables
     Intent soundActivity;
+    //Alarm to be set
+    Alarm mAlarm;
+    //Progress diaglos
+    ProgressDialog pd;
 
 
     public set_alarmFragment() {
@@ -71,8 +84,16 @@ public class set_alarmFragment extends Fragment {
         //Set the listeners for the days and the button for opening the app toolbar,
         //as well as the close button.
         setDayListeners();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mMinute = timepick.getMinute();
+            mHour = timepick.getHour();
+        }
+        else{
+            mMinute = timepick.getCurrentMinute();
+            mHour = timepick.getCurrentMinute();
+        }
 
-        DBManager.initialize(getContext());
+
         return rootView;
 
     }
@@ -112,6 +133,7 @@ public class set_alarmFragment extends Fragment {
         //layout = (FABToolbarLayout) rootView.findViewById(R.id.fabtoolbar);
         choose = (Button) rootView.findViewById(R.id.choose);
         save = (Button) rootView.findViewById(R.id.save);
+        timepick = (TimePicker) rootView.findViewById(R.id.timePicker);
     }
 
     //Private method for initializing in the beggining the day drawables and the closing mark
@@ -194,10 +216,50 @@ public class set_alarmFragment extends Fragment {
         save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                mAlarm = new Alarm(mHour.toString() + ":" + mMinute.toString(), selected);
+                new AddAlarmToCalendar().execute(mAlarm);
             }
         });
 
+        timepick.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                mMinute = minute;
+                mHour = hourOfDay;
+            }
+        });
+
+    }
+
+
+    private class AddAlarmToCalendar extends AsyncTask<Alarm, Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Alarm... alarm) {
+
+            List<Alarm> alarms = DBManager.instance().getAllAlarms();
+            if(alarms.size() >= 10){
+                flag = false;
+                return null;
+            }
+
+            DBManager.instance().insertAlarm(mAlarm);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            pd.dismiss();
+            if(!flag){
+                Toast.makeText(getContext(), "You can only have up 10 alarms!", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            pd = ProgressDialog.show(getContext(), "Adding your alarm", "Please wait...");
+        }
     }
 
 

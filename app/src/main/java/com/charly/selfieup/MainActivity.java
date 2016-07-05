@@ -20,6 +20,13 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
+
+import com.charly.selfieup.alarmdatabase.DBManager;
+import com.charly.selfieup.alarmdatabase.Alarm;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ArrayList<Alarm> alarms = new ArrayList<Alarm>();
+    private RecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(setAlarm);
             }
         });
+
+        DBManager.initialize(getApplicationContext());
+        //alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
+        recyclerAdapter = new RecyclerAdapter(alarms);
 
     }
 
@@ -117,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     rootView = inflater.inflate(R.layout.fragment_list_of_alarms, container, false);
+                    ArrayList<Alarm> alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
+                    //recyclerAdapter = new RecyclerAdapter(cardsEventData);
                     break;
                 case 3:
                     rootView = inflater.inflate(R.layout.fragment_main, container, false);

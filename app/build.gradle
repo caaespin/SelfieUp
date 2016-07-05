@@ -19,7 +19,7 @@ android {
     }
 }
 
-repositories{
+repositories {
     maven {
         url 'http://dl.bintray.com/amulyakhare/maven'
     }
@@ -35,4 +35,5 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.fafaldo:fab-toolbar:1.2.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.android.support:support-v4:23.4.0'
 }

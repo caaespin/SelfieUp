@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,6 +219,8 @@ public class set_alarmFragment extends Fragment {
             public void onClick(View v) {
                 mAlarm = new Alarm(mHour.toString() + ":" + mMinute.toString(), selected);
                 new AddAlarmToCalendar().execute(mAlarm);
+                NavUtils.navigateUpFromSameTask(getActivity());
+
             }
         });
 

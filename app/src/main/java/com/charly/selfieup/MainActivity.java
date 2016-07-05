@@ -1,5 +1,7 @@
 package com.charly.selfieup;
 
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,38 +56,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
+                //Go to the set_alarm activity
+                Intent setAlarm = new Intent(getApplicationContext(), set_alarm.class);
+                startActivity(setAlarm);
             }
         });
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -94,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private AnimationDrawable clock_animation;
 
         public PlaceholderFragment() {
         }
@@ -115,9 +102,36 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
 
             //You can use getArguments() to get which fragment should be used and then inflate it
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            View rootView = null;
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)){
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_main, container, false);
+                    ImageView clockImage = (ImageView) rootView.findViewById(R.id.clock_fig);
+                    clockImage.setImageResource(R.drawable.animation_list);
+                    clock_animation = (AnimationDrawable) clockImage.getDrawable();
+                    clock_animation.start();
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_list_of_alarms, container, false);
+                    break;
+                case 3:
+                    rootView = inflater.inflate(R.layout.fragment_main, container, false);
+                    clockImage = (ImageView) rootView.findViewById(R.id.clock_fig);
+                    clockImage.setImageResource(R.drawable.animation_list);
+                    clock_animation = (AnimationDrawable) clockImage.getDrawable();
+                    clock_animation.start();
+                    break;
+            }
+
+            //View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            //ImageView clockImage = (ImageView) rootView.findViewById(R.id.clock_fig);
+            //clockImage.setImageResource(R.drawable.animation_list);
+            //clock_animation = (AnimationDrawable) clockImage.getDrawable();
+            //clock_animation.start();
             return rootView;
         }
     }

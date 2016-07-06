@@ -32,7 +32,7 @@
                     android:layout_width="145dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/days_format"
+
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_centerVertical="true"
@@ -43,7 +43,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:background="@drawable/days_format"
+
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_alignParentEnd="true"
@@ -57,6 +57,8 @@
                 android:layout_alignBottom="@id/daysAre"
                 android:layout_alignLeft="@id/daysAre"
                 android:layout_alignRight="@id/daysAre"
+                android:padding="10dp"
+                android:paddingStart="15dp"
                 android:gravity="center">
 
                 <TextView
@@ -64,10 +66,10 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="M"
+                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:id="@+id/mTxtV"
-                    android:layout_marginStart="10dp"
-
+                    android:textColor="#dbdbdb"
                     android:layout_centerVertical="true"
 
                     />
@@ -76,12 +78,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-
+                    android:textStyle="bold"
                     android:text="T"
                     android:id="@+id/tTxtV"
                     android:layout_weight="1"
+                    android:textColor="#dbdbdb"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/mTxtV"
+
                     />
 
                 <TextView
@@ -89,10 +92,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="W"
+                    android:textStyle="bold"
                     android:id="@+id/wTxtV"
                     android:layout_weight="1"
+                    android:textColor="#dbdbdb"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/tTxtV"
+
                     />
 
                 <TextView
@@ -100,10 +105,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Th"
+                    android:textStyle="bold"
                     android:id="@+id/thTxtV"
                     android:layout_centerVertical="true"
+                    android:textColor="#dbdbdb"
                     android:layout_weight="1"
-                    android:layout_toEndOf="@+id/wTxtV"
+
                     />
 
                 <TextView
@@ -111,10 +118,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="F"
+                    android:textStyle="bold"
                     android:id="@+id/fTxtV"
                     android:layout_centerVertical="true"
+                    android:textColor="#dbdbdb"
                     android:layout_weight="1"
-                    android:layout_toEndOf="@+id/thTxtV"
+
                     />
 
                 <TextView
@@ -122,10 +131,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="S"
+                    android:textStyle="bold"
                     android:id="@+id/sTxtV"
                     android:layout_centerVertical="true"
+                    android:textColor="#dbdbdb"
                     android:layout_weight="1"
-                    android:layout_toEndOf="@+id/fTxtV"
+
                     />
 
                 <TextView
@@ -133,10 +144,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Su"
+                    android:textStyle="bold"
                     android:id="@+id/suTxtV"
                     android:layout_centerVertical="true"
+                    android:textColor="#dbdbdb"
                     android:layout_weight="1"
-                    android:layout_toEndOf="@+id/sTxtV"
+
                     />
 
 

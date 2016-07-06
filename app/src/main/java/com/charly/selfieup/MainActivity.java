@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         DBManager.initialize(getApplicationContext());
-        //alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
-        recyclerAdapter = new RecyclerAdapter(alarms);
+        alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
+        //recyclerAdapter = new RecyclerAdapter(alarms);
 
     }
 
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         private AnimationDrawable clock_animation;
+        private RecyclerView recyclerView;
+        //RecyclerAdapter recyclerAdapter = new RecyclerAdapter(alarms);
 
         public PlaceholderFragment() {
         }
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
+
             View rootView = null;
             switch (getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 1:
@@ -131,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     rootView = inflater.inflate(R.layout.fragment_list_of_alarms, container, false);
                     ArrayList<Alarm> alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
+                    RecyclerAdapter recyclerAdapter = new RecyclerAdapter(alarms);
+                    recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(recyclerAdapter);
                     //recyclerAdapter = new RecyclerAdapter(cardsEventData);
                     break;
                 case 3:

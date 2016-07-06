@@ -5,16 +5,13 @@ package com.charly.selfieup;
 //https://github.com/amulyakhare/TextDrawable //used this for letter for the days
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -24,14 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.charly.selfieup.alarmdatabase.DBManager;
 import com.charly.selfieup.alarmdatabase.Alarm;
-import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
 import java.util.List;
 
@@ -52,7 +47,7 @@ public class set_alarmFragment extends Fragment {
     //Declare the arrays
     ImageView[] dayImage = new ImageView[7];
     TextDrawable[] dayDrawable = new TextDrawable[7];
-    int[] imageId = {R.id.monday, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday, R.id.sunday};
+    int[] imageId = {R.id.hourIs, R.id.tuesday, R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday, R.id.sunday};
     //Buttons and time picker
     Button choose, save;
     TimePicker timepick;

@@ -71,7 +71,7 @@
 
 
                         <ImageView
-                            android:id="@+id/monday"
+                            android:id="@+id/hourIs"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"

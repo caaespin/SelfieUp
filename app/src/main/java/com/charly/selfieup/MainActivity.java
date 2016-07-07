@@ -135,11 +135,12 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     rootView = inflater.inflate(R.layout.fragment_list_of_alarms, container, false);
                     ArrayList<Alarm> alarms = (ArrayList<Alarm>) DBManager.instance().getAllAlarms();
-                    RecyclerAdapter recyclerAdapter = new RecyclerAdapter(alarms);
+                    RecyclerAdapter recyclerAdapter = new RecyclerAdapter(alarms, getActivity());
                     recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(recyclerAdapter);
+
                     //recyclerAdapter = new RecyclerAdapter(cardsEventData);
                     break;
                 case 3:

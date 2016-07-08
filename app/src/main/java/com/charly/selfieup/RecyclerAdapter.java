@@ -23,16 +23,20 @@ import android.widget.TextView;
 
 import com.charly.selfieup.alarmdatabase.Alarm;
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.charly.selfieup.alarmdatabase.DBManager;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 /**
  * Created by Charly on 7/4/16.
+ *
+ * Current problem: 12:00am is being shown as 0:0am; 12:05am is being shown as 12:5am
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
     private ArrayList<Alarm> alarmDataSource;
+    private static ArrayList<Alarm> alarmsSelected = new ArrayList<Alarm>();
 
     public RecyclerAdapter(ArrayList<Alarm> dataArgs, Activity myActivity){
         alarmDataSource = dataArgs;
@@ -60,7 +64,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Alarm mAlarm = alarmDataSource.get(position);
+        final Alarm mAlarm = alarmDataSource.get(position);
+       // mAlarm.setPosition(position); //testing position within the alarm
         String[] time = mAlarm.getTime().split(":");
         String days = mAlarm.getDays();
         Integer hour = Integer.parseInt(time[0]);
@@ -85,6 +90,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 CardView cview = (CardView) v.findViewById(R.id.card_view);
                 cview.setCardBackgroundColor(Color.DKGRAY);
                 v.setSelected(true);
+                alarmsSelected.add(mAlarm);
 
                 //mActionMode.setTitle(Integer.toString(cardsSelected) + " selected");
                 return true;
@@ -102,12 +108,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 if(!v.isSelected()){
                     cview.setCardBackgroundColor(Color.DKGRAY);
                     v.setSelected(true);
+                    alarmsSelected.add(mAlarm);
                     cardsSelected++;
                     //mActionMode.setTitle(Integer.toString(cardsSelected++) + " selected");
                 }
                 else{
                     cview.setCardBackgroundColor(Color.WHITE);
                     v.setSelected(false);
+                    alarmsSelected.remove(mAlarm);
                     cardsSelected--;
                     //mActionMode.setTitle(Integer.toString(cardsSelected--) + " selected");
                 }
@@ -158,7 +166,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.item_delete:
-                    //shareCurrentItem();
+                    //deleteCurrentItems();
+                    deleteCurrentItems(true, alarmsSelected);
                     mode.finish(); // Action picked, so close the CAB
                     return true;
                 default:
@@ -169,7 +178,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // Called when the user exits the action mode
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            //Have to implement method for setting all the selected items back to normal
+            cardsSelected = 0;
             mActionMode = null;
+        }
+
+
+        private void deleteCurrentItems(Boolean trashCanClicked, ArrayList<Alarm> selectedAlarms){
+            for(int i =0; i<selectedAlarms.size(); i++){
+                DBManager.instance().deleteAlarm(selectedAlarms.get(i).getID());
+                alarmDataSource.remove(selectedAlarms.get(i));
+            }
+            notifyDataSetChanged();
         }
     };
 

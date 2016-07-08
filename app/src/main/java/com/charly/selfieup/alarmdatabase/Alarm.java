@@ -8,6 +8,7 @@ public class Alarm {
     private long ID;
     private String time;
     private String days;  // it would be in the format of 0123..etc like for exampple, for MWF, it would be 024
+    private int position;
 
 
     public Alarm() {
@@ -16,6 +17,13 @@ public class Alarm {
     public Alarm(String time, Boolean[] daysArr) {
         this.setTime(time);
         this.setDays(daysArr);
+    }
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    public int getPosition(){
+        return position;
     }
 
     public long getID() {

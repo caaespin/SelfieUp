@@ -74,7 +74,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String[] time = mAlarm.getTime().split(":");
         String days = mAlarm.getDays();
         Integer hour = Integer.parseInt(time[0]);
-        String correctHour = hour > 12 ? Integer.toString(hour - 12) +":"+ time[1] +"pm" : Integer.toString(hour)+":"+ time[1] +"am";
+
+        //String correctHour = hour > 12 ? Integer.toString(hour - 12) +":"+ time[1] +"pm" : Integer.toString(hour)+":"+ time[1] +"am";
+
+        String correctHour = getRightHour(time[0], time[1]);
         TextDrawable tdHour = TextDrawable.builder().beginConfig().bold().textColor(Color.parseColor("#7e7e7e")).endConfig()
                 .buildRoundRect(correctHour, Color.TRANSPARENT, 10);
         TextView[] daysArray = {holder.vMonday, holder.vTuesday, holder.vWednesday, holder.vThursday, holder.vFriday, holder.vSaturday, holder.vSunday};
@@ -136,6 +139,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 return;
             }
         });
+    }
+
+    private String getRightHour(String mH, String mM) {
+        Integer numericHour = Integer.parseInt(mH);
+        String am_pm = (numericHour >= 12 ? "pm" :  "am");
+        numericHour = (numericHour > 12 ? (numericHour-12) :  numericHour);
+        if(numericHour == 0) numericHour = 12;
+        String hour = Integer.toString(numericHour);
+        if(hour.length()<2){
+            hour = "0" + hour;
+        }
+
+        if(mM.length()<2){
+            mM = "0" + mM;
+        }
+        return (hour + ":" + mM + am_pm);
     }
 
     private void highLightDays(TextView[] daysArray, String days) {

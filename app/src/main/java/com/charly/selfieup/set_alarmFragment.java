@@ -219,9 +219,13 @@ public class set_alarmFragment extends Fragment {
             }
         });
 
+
+        timepick.setIs24HourView(true);
         timepick.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+
+                //Great, fucking bug inhibits this from being called whenever am/pm is touched and changed
                 mMinute = minute;
                 mHour = hourOfDay;
             }

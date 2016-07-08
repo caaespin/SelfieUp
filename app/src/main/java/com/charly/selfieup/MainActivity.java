@@ -1,5 +1,6 @@
 package com.charly.selfieup;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.FloatingActionButton;
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

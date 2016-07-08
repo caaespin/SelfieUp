@@ -2,6 +2,7 @@ package com.charly.selfieup;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -32,11 +33,15 @@ import java.util.zip.Inflater;
  * Created by Charly on 7/4/16.
  *
  * Current problem: 12:00am is being shown as 0:0am; 12:05am is being shown as 12:5am
+ *                  :12:00pm is being saved as 12:00am
+ *                  am and pm marks are not working appropriately. Need to debug
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
     private ArrayList<Alarm> alarmDataSource;
     private static ArrayList<Alarm> alarmsSelected = new ArrayList<Alarm>();
+    private static ArrayList<CardView> cvsSelected = new ArrayList<CardView>();
+    private static ArrayList<View> vsSelected = new ArrayList<View>();
 
     public RecyclerAdapter(ArrayList<Alarm> dataArgs, Activity myActivity){
         alarmDataSource = dataArgs;
@@ -77,6 +82,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //TextDrawable tdMinute = TextDrawable.builder().beginConfig().bold().endConfig()
         //        .buildRoundRect(time[1], Color.parseColor("#3333ff"), 10);;
         holder.vHour.setImageDrawable(tdHour);
+        holder.cV.setCardBackgroundColor(Color.WHITE); //Testings
         holder.cV.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -88,9 +94,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 cardsSelected++;
                 mActionMode = mActivity.startActionMode(mActionModeCallback);
                 CardView cview = (CardView) v.findViewById(R.id.card_view);
+
                 cview.setCardBackgroundColor(Color.DKGRAY);
                 v.setSelected(true);
+                vsSelected.add(v);
                 alarmsSelected.add(mAlarm);
+                cvsSelected.add(cview);
 
                 //mActionMode.setTitle(Integer.toString(cardsSelected) + " selected");
                 return true;
@@ -109,6 +118,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     cview.setCardBackgroundColor(Color.DKGRAY);
                     v.setSelected(true);
                     alarmsSelected.add(mAlarm);
+                    cvsSelected.add(cview);
+                    vsSelected.add(v);
                     cardsSelected++;
                     //mActionMode.setTitle(Integer.toString(cardsSelected++) + " selected");
                 }
@@ -116,6 +127,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     cview.setCardBackgroundColor(Color.WHITE);
                     v.setSelected(false);
                     alarmsSelected.remove(mAlarm);
+                    cvsSelected.remove(cview);
+                    vsSelected.remove(v);
                     cardsSelected--;
                     //mActionMode.setTitle(Integer.toString(cardsSelected--) + " selected");
                 }
@@ -169,6 +182,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     //deleteCurrentItems();
                     deleteCurrentItems(true, alarmsSelected);
                     mode.finish(); // Action picked, so close the CAB
+                    mActionMode = null;
                     return true;
                 default:
                     return false;
@@ -179,6 +193,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             //Have to implement method for setting all the selected items back to normal
+            deleteCurrentItems(false, alarmsSelected);
             cardsSelected = 0;
             mActionMode = null;
         }
@@ -186,9 +201,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         private void deleteCurrentItems(Boolean trashCanClicked, ArrayList<Alarm> selectedAlarms){
             for(int i =0; i<selectedAlarms.size(); i++){
-                DBManager.instance().deleteAlarm(selectedAlarms.get(i).getID());
-                alarmDataSource.remove(selectedAlarms.get(i));
+                if(trashCanClicked){
+                    DBManager.instance().deleteAlarm(selectedAlarms.get(i).getID());
+                    alarmDataSource.remove(selectedAlarms.get(i));
+                }
+                else{
+                    cvsSelected.get(i).setCardBackgroundColor(Color.WHITE);
+                    vsSelected.get(i).setSelected(false);
+                }
+
             }
+            cardsSelected = 0;
+            cvsSelected.clear();
+            vsSelected.clear();
+            selectedAlarms.clear();
             notifyDataSetChanged();
         }
     };

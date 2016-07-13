@@ -11,11 +11,14 @@ import com.charly.selfieup.alarmdatabase.DBManager;
 
 public class set_alarm extends AppCompatActivity {
 
+    private static set_alarm mInstance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_alarm);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mInstance = this;
         //toolbar.setTitle("");
         setSupportActionBar(toolbar);
         //toolbar.setTitle("Set Your Alarm");
@@ -23,4 +26,9 @@ public class set_alarm extends AppCompatActivity {
         //toolbar.setTitle("Set Your Alarm");
         DBManager.initialize(getApplicationContext());
     }
+
+    public static set_alarm instance() {
+        return mInstance;
+    }
+
 }

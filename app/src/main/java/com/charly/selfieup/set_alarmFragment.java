@@ -4,7 +4,10 @@ package com.charly.selfieup;
 //https://github.com/fafaldo/FABToolbar  //used it for the toolbar expansion thing
 //https://github.com/amulyakhare/TextDrawable //used this for letter for the days
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
@@ -27,7 +30,9 @@ import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.charly.selfieup.alarmdatabase.DBManager;
 import com.charly.selfieup.alarmdatabase.Alarm;
+import com.charly.selfieup.alarmtools.AlarmReceiver;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -214,6 +219,15 @@ public class set_alarmFragment extends Fragment {
             public void onClick(View v) {
                 mAlarm = new Alarm(mHour.toString() + ":" + mMinute.toString(), selected);
                 new AddAlarmToCalendar().execute(mAlarm);
+                AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                //NavUtils.navigateUpFromSameTask(getActivity());
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, mHour);
+                calendar.set(Calendar.MINUTE, mMinute);
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY); //Testing for a single day. Need to change it to selected days
+                Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), (int) mAlarm.getID(), myIntent, 0);
+                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
                 NavUtils.navigateUpFromSameTask(getActivity());
 
             }
